@@ -1,0 +1,130 @@
+1. fetch data by comma seprate ids.
+
+
+    public function get_data_by_comma_id($tableName,$where,$comma_seperate_id)
+    {
+		$id = explode(",",$comma_seperate_id);
+		$this->db->select('*');
+	    $this->db->from($tableName);
+	   	$this->db->where_in($where,$id);
+	    $query = $this->db->get();
+	    return $query->result();
+	}
+
+2. get singe row data 
+
+	public function get_single_row_data($selectColumeArray,$where,$id,$tableName)
+	{
+	  	$selectData = implode(",",$selectColumeArray);
+    	$this->db->select($selectData);
+	    $this->db->where($where,$id);
+	    $query = $this->db->get($tableName);
+	   	return $row = $query->row();
+
+	} 
+
+3. get muliple row data 
+
+	public function get_multiple_data($selectColumeArray,$where,$id,$tableName){
+	  	$selectData = implode(",",$selectColumeArray);
+    	$this->db->select($selectData);
+	    $this->db->where($where,$id);
+	    $query = $this->db->get($tableName);
+	   return  $query->result();
+
+	} 
+
+4. find in set data find with comma seprated id
+
+
+   	public function findInSetData(){
+	  	
+    	$this->db->select('*');
+	   	$where = "FIND_IN_SET('".$searchId."',columnName)"; 
+        $this->db->where($where);
+	    $query = $this->db->get('tableName');
+	   	return  $query->result();
+
+	} 
+
+
+5. Update data function 
+
+
+	public function updateData($dataArray,$tableName,$whereColumn,$whereId){
+
+        $this->db->set($dataArray);
+        $this->db->where($whereColumn,$whereId);
+        return $this->db->update($tableName);
+	}
+
+
+
+6. Common Delete Function
+
+	public function deleteData($whereColumn,$whereId,$tableName)
+    {        
+        $this->db->where($whereColumn,$whereId)->delete($tableName);
+    }
+
+7. Common Insert function
+
+	public function insertData($dataArray,$tableName)
+	{
+
+        $this->db->insert($tableName, $dataArray);
+    }
+
+
+8. Common insert function with return last insert Id
+
+	public function insertDataWithReturnId($dataArray,$tableName){
+
+		$this->db->insert($tableName,$dataArray);
+
+        return $lastInsertId = $this->db->insert_id();
+
+	}
+
+9. Get data Count 
+
+
+	public function getDataCount($tableName,$whereColumn,$whereId){
+
+		$this->db->select('*');
+	    $this->db->where($whereColumn,$whereId);
+	   	$this->db->from($tableName);
+        $query = $this->db->get();
+	   	return $query->num_rows();
+	}
+
+
+10. join multiple table
+
+	public function joinMultiTable(){
+
+		$this->db->select('t.*,t1.*,t2.*,t3.*,t.id as ti);
+        $this->db->from('table t'); 
+        $this->db->join('table1 t1', 't1.id_t1=t.id_t');
+        $this->db->join('table2 t2', 't2.id_t2=t.id_t');
+        $this->db->join('table3 t3', 't3.id_t3=t.id_t');
+        $this->db->where('columnName','searchId');      
+        $query = $this->db->get(); 
+        return $query->result_array();
+
+	}
+
+
+11. join one table
+
+
+	public function singleJoin(){
+
+      $this->db->select('*');
+      $this->db->from('table1 t1');
+      $this->db->join('table2 t2', 't2.id_t2 = t1.id_t1');
+      $query = $this->db->get();
+      $result = $query->result_array();
+      return $result;
+
+    }
