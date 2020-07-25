@@ -90,12 +90,10 @@
 
 
 	public function getDataCount($tableName,$whereColumn,$whereId){
-
-		$this->db->select('*');
-	    $this->db->where($whereColumn,$whereId);
-	   	$this->db->from($tableName);
-        $query = $this->db->get();
-	   	return $query->num_rows();
+	
+		this->db->where($whereColumn,$whereId);
+		$query = $this->db->get($tableName);
+		return $query->num_rows();
 	}
 
 
