@@ -136,3 +136,33 @@
     <strong>Success!</strong><?php echo $this->session->flashdata('successSendEmail'); ?>
     </div>
     <?php }?>
+
+
+13. image upload 
+
+  if(!empty($_FILES['emailDocument']['name']))
+       {        
+                $new_name = md5($_FILES["emailDocument"]['name']);
+                $config['file_name'] = $new_name;
+                $config['upload_path'] = 'dist/ffa/emailDocuments';
+                $config['allowed_types'] = 'jpg|jpeg|png|pdf';
+		$config['max_size']             = 1000;
+	     	$config['max_width']            = 1024;
+	     	$config['max_height']           = 768;
+          
+                
+                //Load upload library and initialize configuration
+                $this->load->library('upload',$config);
+                $this->upload->initialize($config);
+                
+                if($this->upload->do_upload('emailDocument'))
+                {
+                    $uploadData = $this->upload->data();
+                    $image = $uploadData['file_name']; 
+                    $ImageNameToStore = $image;
+                }else{
+                  $ImageNameToStore = "";
+              }
+       }else{
+       $ImageNameToStore = "";
+     }
