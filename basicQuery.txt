@@ -126,3 +126,13 @@
       return $result;
 
     }
+
+12 flash sessiom message 
+
+	$this->session->set_flashdata('successSendEmail', 'Email does not exist!!'); 
+
+   <?php if($this->session->flashdata('successSendEmail')) { ?>
+    <div class="alert alert-success">
+    <strong>Success!</strong><?php echo $this->session->flashdata('successSendEmail'); ?>
+    </div>
+    <?php }?>
