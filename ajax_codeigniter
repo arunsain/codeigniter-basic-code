@@ -1,1 +1,27 @@
 
+1 ajacode 
+
+  
+$(document).on("keypress", ".postUserList", function(e){
+	var getcurrentpostid = $(this).data('getcurrentpostid');
+	//alert(getcurrentpostid);
+//alert(e);
+	// console.log(e);
+        if(e.keyCode == 64){
+        	 var basepath = "<?= base_url(); ?>";
+            var inputVal = $(this).val();
+           //alert("You've entered: " + inputVal);
+            $.ajax({
+            url: basepath+"/user/getUserListWhenAtRatePressComment",
+            type:"post",
+             data:{ inputVal: inputVal,getcurrentpostid:getcurrentpostid},
+            success:function(data){
+              // alert(data);
+                $('#atRateUserList'+getcurrentpostid).html(data);
+            //location.reload();
+            },
+            error:function(data){
+            }
+        });
+        }
+    });
