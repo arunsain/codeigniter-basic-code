@@ -166,3 +166,9 @@
        }else{
        $ImageNameToStore = "";
      }
+     
+     
+14. get base path when request send by ajax
+
+	var basepath = "<?= base_url(); ?>";
+
