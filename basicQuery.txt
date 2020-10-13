@@ -172,3 +172,18 @@
 
 	var basepath = "<?= base_url(); ?>";
 
+
+15. get data in simple array (not using class object array)
+
+		function getProject(){
+		$select = "SELECT * FROM `wb_projects` ORDER BY ID DESC";
+		$select =  $this->db->query($select);
+		$result = $select->result_array();
+		foreach ($result as $key => $value) {
+			$result[$key]['snss'] = "ddd";
+		}
+		echo "<pre>";		
+		 print_r($result);
+		 die;
+	}
+
