@@ -1,0 +1,28 @@
+how to remove index.php from url 
+
+Open config.php and do following replaces
+
+1.  $config['index_page'] = "index.php";
+
+			to
+
+$config['index_page'] = "";
+
+
+2. $config['uri_protocol'] ="AUTO";
+ 		
+ 		to
+
+ $config['uri_protocol'] = "REQUEST_URI"
+
+
+
+ 3 replace this code in .htaccess file
+
+ RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+
+4. And move .htaccess file from application/.htaccess to root folder of your project.
