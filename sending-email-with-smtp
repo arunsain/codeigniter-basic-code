@@ -1,0 +1,55 @@
+ if($name!='' && $e_mail!='' && $message!=''){
+	        
+	        $html = '<html>
+                    <head>
+                    <title>Soteria</title>
+                    </head>
+                    <body>
+                    <table width="600" border="0" align="center" cellpadding="5" cellspacing="5" style="background-color:#fbfbfb;">
+                      
+                      <tr>
+                        <h1 style="color:#373737;font-family:tahoma;" >Psteria</h1>
+                        </td>
+                      </tr>
+                      <tr>
+                      <td>
+                      <strong>Name: </strong>'.$name.'<br>
+                      <strong>Email: </strong><a href="mailto:'.$e_mail.'">'.$e_mail.'</a><br>
+                      <strong>Phone Number: </strong>'.$phone.'<br>
+                      <strong>Message: </strong>'.$message.'
+                       </td>
+                      </tr>
+                    </table>
+                    </body>
+                    </html>';
+                    
+            $to = "contact@psteria.com";
+            
+            //// new code for mail
+            
+        $credentialEmail = 	$this->front_model->get_single_row_data(['*'],'id',1,'ps_admin');
+    	$config['protocol']    = 'smtp';
+        $config['smtp_host']    = 'ssl://smtp.gmail.com';
+        $config['smtp_port']    = $credentialEmail->st_port ; //'465';
+        $config['smtp_timeout'] = '7';
+        $config['smtp_user']    = $credentialEmail->st_username; 
+        $config['smtp_pass']    = $credentialEmail->st_password; 
+        $config['charset']    = 'utf-8';
+        $config['newline']    = "\r\n";
+        $config['mailtype'] = 'html'; // or html
+        $config['validation'] = TRUE; // bool whether to validate email or not      
+        $this->email->initialize($config);
+    
+    
+        $this->email->from($e_mail, $name);
+        $this->email->to($credentialEmail->st_email); 
+    
+        $this->email->subject('Contact Us Detail');
+        $this->email->message($html);  
+    
+        $this->email->send();
+             
+	        $this->session->set_userdata('success_msg',"Message send successfully");
+	    }else{
+	         $this->session->set_userdata('error_msg',"Please fill all the required fields");
+	    }
