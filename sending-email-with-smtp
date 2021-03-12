@@ -1,4 +1,10 @@
- if($name!='' && $e_mail!='' && $message!=''){
+->first include this library
+
+$this->load->library('email'); 
+ 
+-> second do this code
+
+if($name!='' && $e_mail!='' && $message!=''){
 	        
 	        $html = '<html>
                     <head>
