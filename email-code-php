@@ -21,3 +21,48 @@ function enviarEmail( $email, $link ){
    // Se envia el correo al usuario
    mail($email, "Password recovery", $mensaje, $cabeceras);
 }
+
+
+
+
+
+
+
+function generarLinkTemporal($idusuario, $username){
+   // Se genera una cadena para validar el cambio de contraseña
+   $cadena = $idusuario.$username.rand(1,9999999).date('Y-m-d');
+   $token = sha1($cadena);
+
+
+	 try {
+        $db = new DbConn;
+        $conf = new GlobalConf;
+        $tblreseteopass = $db->tblreseteopass;
+        $ip_address = $conf->ip_address;
+        $err = '';
+
+         $sql = "INSERT INTO $tblreseteopass (idusuario, username, token, creado) VALUES(:idusuario,:username,:token,NOW());";
+
+        $stmt = $db->conn->prepare($sql);
+        $stmt->bindParam(':idusuario', $idusuario);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':token', $token);
+        $stmt->execute();
+		
+            $err = '';
+	 }
+         catch (PDOException $e) {
+
+            $err = "Error: " . $e->getMessage();
+
+        }
+        //Determines returned value ('true' or error code)
+        if ($err == '') {
+                  // Se devuelve el link que se enviara al usuario
+			$enlace = $_SERVER["SERVER_NAME"].'/login/restablecer.php?idusuario='.sha1($idusuario).'&token='.$token;
+			return $enlace;
+        }    else{		
+				//echo '<script type="text/javascript">alert("'.$err.'")</script>';
+				return FALSE;
+				}
+}
