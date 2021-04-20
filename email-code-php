@@ -1,0 +1,23 @@
+function enviarEmail( $email, $link ){
+   $mensaje = '<html>
+     <head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+        <title>Restarting password</title>
+     </head>
+     <body>
+       <p>We received a password restart requirement.</p>
+       <p>If you did it, click next link, else, ignore this mail..</p>
+       <p>
+        <strong>Link : </strong><br>Please click or copy and paste in a browser<br>
+		<a href= "https://'.$link.'"> '.$link.'</a>
+       </p>
+     </body>
+    </html>';
+ 
+   $cabeceras = 'MIME-Version: 1.0' . "\r\n";
+   $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+   $cabeceras .= 'From: EZshippersJA' . "\r\n";
+	$cabeceras =utf8_decode($cabeceras);
+	$mensaje =utf8_decode($mensaje);
+   // Se envia el correo al usuario
+   mail($email, "Password recovery", $mensaje, $cabeceras);
+}
