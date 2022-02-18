@@ -1,0 +1,9 @@
+
+1. for restict number and 9 digit
+
+	 $("#simPhNum").attr("maxlength", "9");
+  $("#simPhNum").keypress(function(e) {
+    var kk = e.which;
+    if(kk < 48 || kk > 57)
+      e.preventDefault();
+  });
