@@ -7,3 +7,23 @@
     if(kk < 48 || kk > 57)
       e.preventDefault();
   });
+
+
+
+
+
+2 code for get 1 hour interval between start time and end time
+
+<?php
+$inveral  = 3600; // 1 hour
+	$startTime = strtotime('08:00:00');   /* Find the timestamp of start time */
+$endTime = strtotime('20:00:00');       /* Find the timestamp of end time */
+$input = array();
+/* Run a loop from start timestamp to end timestamp */
+for ($i = $startTime; $i < $endTime; $i+=$inveral) {
+   
+      echo  date("H:i:s", $i); 
+      echo "<br>";
+      
+}
+?>
